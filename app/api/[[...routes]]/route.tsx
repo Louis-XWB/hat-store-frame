@@ -9,14 +9,14 @@ import { PinataFDK } from "pinata-fdk";
 import abi from "./abi.json";
 
 const fdk = new PinataFDK({
-  pinata_jwt: process.env.PINATA_JWT || "",
+  pinata_jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzZTExMWM4YS00NTMwLTQ1OWEtYTY1Zi00ZjY5OGYxYWViZDAiLCJlbWFpbCI6Inh1d2FiNzdAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9LHsiaWQiOiJOWUMxIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwNTY4NmY2MGJiN2FjM2VhYzBmIiwic2NvcGVkS2V5U2VjcmV0IjoiYTQ1MDgyZGMxNTkzYmQzYWU2M2UwZjY1ZDY3NmY5ZjUyMTIwYjlmZDU5OWM4ZTg1NGM4NWU0ZGI2ZmExMWFkYiIsImlhdCI6MTcxMTY3NjUwMn0.2bbzxijBRRziZ_wiX7Q2ILRmHZdBFHcdneTIdX2SPA4",
   pinata_gateway: "",
 });
 
-const CONTRACT = process.env.CONTRACT_ADDRESS as `0x` || ""
-const privateKey = process.env.PRIVATE_KEY as `0x` || ""
+// const CONTRACT = process.env.CONTRACT_ADDRESS as `0x` || ""
+// const privateKey = process.env.PRIVATE_KEY as `0x` || ""
 
-const account = privateKeyToAccount(privateKey);
+const account = privateKeyToAccount('0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e');
 
 const publicClient = createPublicClient({
   chain: baseSepolia,
@@ -32,7 +32,7 @@ const walletClient = createWalletClient({
 async function checkBalance(address: any) {
   try {
     const balance = await publicClient.readContract({
-      address: CONTRACT,
+      address: '0xe4442350134eea5fc0c8cdf7982ffacff71ada3d',
       abi: abi.abi,
       functionName: "balanceOf",
       args: [address, 0],
@@ -48,7 +48,7 @@ async function checkBalance(address: any) {
 async function remainingSupply() {
   try {
     const balance = await publicClient.readContract({
-      address: CONTRACT,
+      address: '0xe4442350134eea5fc0c8cdf7982ffacff71ada3d',
       abi: abi.abi,
       functionName: "totalSupply",
     });
@@ -147,7 +147,7 @@ app.frame("/coupon", async (c) => {
   ) {
     const { request: mint } = await publicClient.simulateContract({
       account,
-      address: CONTRACT,
+      address: '0xe4442350134eea5fc0c8cdf7982ffacff71ada3d',
       abi: abi.abi,
       functionName: "mint",
       args: [address],
@@ -185,7 +185,7 @@ app.transaction("/buy/:price", async (c) => {
     chainId: "eip155:84532",
     functionName: "buyHat",
     args: [c.frameData?.fid],
-    to: CONTRACT,
+    to: '0xe4442350134eea5fc0c8cdf7982ffacff71ada3d',
     value: parseEther(`${price}`),
   });
 });
